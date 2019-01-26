@@ -14,6 +14,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "ICHACK";
   private SignInButton googleSignInButton;
@@ -53,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
           try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);
-
             onLoggedIn(account);
           } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+          } catch (MalformedURLException e) {
+            e.printStackTrace();
           }
 
           break;
@@ -64,7 +70,28 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void onLoggedIn(GoogleSignInAccount googleSignInAccount) {
+  private void onLoggedIn(GoogleSignInAccount googleSignInAccount) throws MalformedURLException {
+
+
+    HttpURLConnection request = new HttpURLConnection(new URL("http://yeetr.me/auth.php")) {
+      @Override
+      public void disconnect() {
+
+      }
+
+      @Override
+      public boolean usingProxy() {
+        return false;
+      }
+
+      @Override
+      public void connect() throws IOException {
+
+      }
+    };
+
+
+
     Intent intent = new Intent(this, HomeActivity.class);
 
     intent.putExtra(String.valueOf(HomeActivity.GOOGLE_ACCOUNT), googleSignInAccount);
@@ -79,7 +106,11 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInAccount lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
     if (lastSignedInAccount != null) {
-      onLoggedIn(lastSignedInAccount);
+      try {
+        onLoggedIn(lastSignedInAccount);
+      } catch (MalformedURLException e) {
+        e.printStackTrace();
+      }
     } else {
       Log.d(TAG, "Not logged in");
     }
