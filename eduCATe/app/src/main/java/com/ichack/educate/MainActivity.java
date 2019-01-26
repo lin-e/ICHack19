@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
   protected void onStart() {
     super.onStart();
     Intent changeActivity;
+    changeActivity = new Intent(MainActivity.this, HomeActivity.class);
+    /*
     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
     if (account != null) {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     } else {
       changeActivity = new Intent(this, LoginActivity.class);
     }
+    */
     startActivity(changeActivity);
 
   }
