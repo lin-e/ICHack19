@@ -40,3 +40,8 @@ dependencies {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
+
+dependencies {
+    implementation 'com.android.support:design:28.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
