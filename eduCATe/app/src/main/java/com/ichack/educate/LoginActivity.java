@@ -6,17 +6,12 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_login);
 
-        //Button gSignInBtn = new Button(R.id.login_googleSignInBtn);
-
-
-
-
-
-
-    }
+    // Creating objects for the View
+    Button gSignInBtn = findViewById(R.id.login_googleSignInBtn);
+  }
 }
