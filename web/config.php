@@ -29,7 +29,7 @@
   function getUserByTID($tid) {
     global $db;
     $token = $db->real_escape_string($tid);
-    if (!isLoggedIn()) {
+    if (!validToken($token)) {
       return array();
     }
     $session_rows = $db->query("SELECT * FROM sessions WHERE tid='$token'");
@@ -61,5 +61,25 @@
     $uid = $db->real_escape_string($id);
     $user_check = $db->query("SELECT * FROM users WHERE uid='$uid'");
     return mysqli_num_rows($user_check) > 0;
+  }
+
+  function usernameExists($name) {
+    global $db;
+    $uname = $db->real_escape_string($name);
+    $user_check = $db->query("SELECT * FROM users WHERE username='$uname'");
+    return mysqli_num_rows($user_check) > 0;
+  }
+
+  function validateUsername($name) {
+    $allowed = "abcdefghijklmnopqrstuvwxyz0123456789_-.";
+    if (strlen($name) < 4 || strlen($name) > 32) {
+      return false;
+    }
+    for ($i = 0; $i < strlen($name); $i++) {
+      if (strpos($name[$i], $allowed) === false) {
+        return false;
+      }
+    }
+    return true;
   }
 ?>
