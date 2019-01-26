@@ -29,7 +29,4 @@ public class LoginActivity extends AppCompatActivity {
     // Button gSignInBtn = new Button(R.id.login_googleSignInBtn);
 
   }
-
-
-
 }
