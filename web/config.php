@@ -120,4 +120,21 @@
     }
     return $data;
   }
+
+  function loadAssignments($uid) {
+    global $db;
+    $subs = $db->query("SELECT * FROM subscribers WHERE uid='$uid'");
+    $assignments = array();
+    while ($sub = $subs->fetch_assoc()) {
+      $aid = intval($sub['aid']);
+      $assignment = $db->query("SELECT * FROM assignments WHERE aid='$aid'")
+      $data = array();
+      $data['id'] = $aid;
+      $data['course'] = $assignment['course'];
+      $data['start'] = intval($assignemt['start']);
+      $data['end'] = intval($assignemt['end']);
+      array_push($assignments, $data);
+    }
+    return $assignments;
+  }
 ?>
