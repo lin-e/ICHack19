@@ -91,8 +91,6 @@
     if (mysqli_num_rows($check) > 0) {
       $row = $check->fetch_assoc();
       $data['id'] = intval($thread);
-      $data['start'] = $start;
-      $data['end'] = $end;
       $data['set'] = intval($row['start']);
       $data['due'] = intval($row['end']);
       $data['course'] = $row['course'];
@@ -107,7 +105,7 @@
         $fil['time'] = intval($file['time']);
         array_push($data['files'], $fil);
       }
-      $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread AND time >= $startbound AND time <= $endbound ORDER BY time") or die("l110");
+      $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
         $msg = array();
