@@ -32,7 +32,7 @@
     if (!validToken($token)) {
       return array();
     }
-    $session_rows = $db->query("SELECT * FROM sessions WHERE tid='$token'");
+    $session_rows = $db->query("SELECT * FROM tokens WHERE tid='$token'");
     $session_row = $session_rows->fetch_assoc();
     $uid = strval($session_row['uid']);
     return getUserByUID($uid);
