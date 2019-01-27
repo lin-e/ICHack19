@@ -82,4 +82,42 @@
     }
     return true;
   }
+
+  function loadThread($tid, $start, $end) { // the start and end boundaries are timestamps
+    global $db;
+    $thread = $db->real_escape_string($tid);
+    $data = array();
+    $check = $db->query("SELECT * FROM threads WHERE thread='$thread'");
+    if (mysqli_num_rows($check) > 0) {
+      $row = $check->fetch_assoc();
+      $data['id'] = $thread;
+      $data['start'] = $start;
+      $data['end'] = $end;
+      $data['assignment'] = intval($row['aid']);
+      $data['time'] = intval($row['time']);
+      $data['messages'] = array();
+      $startbound = strval($start);
+      $endbound = strval($end);
+      $messages = $db->query("SELECT * FROM messages WHERE thread='$thread' AND time >= $startbound AND time <= $endbound");
+      $user_cache = array();
+      while ($message = $messages->fetch_assoc()) {
+        $msg = array();
+        $msg['id'] = $message['mid'];
+        $msg['body'] = $message['content'];
+        $msg['time'] = intval($message['time']);
+        $id = $message['uid'];
+        if (!array_key_exists($id, $user_cache)) {
+          $users = $db->query("SELECT * FROM users WHERE uid='$id'");
+          $user = $users->fetch_assoc();
+          $new_user = array();
+          $new_user['username'] = $id;
+          $new_user['picture'] = $user['picture'];
+          $user_cache[$id] = $new_user;
+        }
+        $msg['user'] = $user_cache[$id]; // we could use the user profile here too?
+        array_push($data['messages'], $msg);
+      }
+    }
+    return $data;
+  }
 ?>
