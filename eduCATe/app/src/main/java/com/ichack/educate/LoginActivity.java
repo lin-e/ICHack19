@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    
+
     GoogleSignInOptions gso =
         new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(
@@ -29,5 +29,4 @@ public class LoginActivity extends AppCompatActivity {
     // Button gSignInBtn = new Button(R.id.login_googleSignInBtn);
 
   }
-
 }
