@@ -87,7 +87,7 @@
     global $db;
     $thread = $db->real_escape_string($assignment);
     $data = array();
-    $check = $db->query("SELECT * FROM assignments WHERE aid=$thread");
+    $check = $db->query("SELECT * FROM assignments WHERE aid=$thread") or die("l90");
     if (mysqli_num_rows($check) > 0) {
       $row = $check->fetch_assoc();
       $data['id'] = $thread;
@@ -100,14 +100,14 @@
       $data['files'] = array();
       $startbound = strval($start);
       $endbound = strval($end);
-      $files = $db->query("SELECT * FROM resources WHERE aid='$thread'");
+      $files = $db->query("SELECT * FROM resources WHERE aid='$thread'") or die("l103");
       while ($file = $files->fetch_assoc()) {
         $fil = array();
         $fil['url'] = $file['url'];
         $fil['time'] = intval($file['time']);
         array_push($data['files'], $fil);
       }
-      $messages = $db->query("SELECT * FROM messages WHERE assignment='$thread' AND time >= $startbound AND time <= $endbound ORDER BY time");
+      $messages = $db->query("SELECT * FROM messages WHERE assignment='$thread' AND time >= $startbound AND time <= $endbound ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
         $msg = array();
@@ -116,7 +116,7 @@
         $msg['time'] = intval($message['time']);
         $id = $message['uid'];
         if (!array_key_exists($id, $user_cache)) {
-          $users = $db->query("SELECT * FROM users WHERE uid='$id'");
+          $users = $db->query("SELECT * FROM users WHERE uid='$id'") or die(";119");
           $user = $users->fetch_assoc();
           $new_user = array();
           $new_user['username'] = $id;
