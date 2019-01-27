@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AssignmentsFragment extends Fragment {
 
@@ -22,46 +25,67 @@ public class AssignmentsFragment extends Fragment {
 
     View view = inflater.inflate(R.layout.fragment_assignments, container, false);
 
-    //TODO: Add data somehow
-    String[] assignNames = {"PMT1", "HW Coursework 2", "Java Picture Processing Lab"};
-    String[] courseNames = {"CO142: Discrete Structures", "CO112: Hardware", "CO120.2: Programming II"};
-    long[] unixDeadlines = {1548590583, 1556029804, 1556323200};
-    String[] deadlineDates = new String[3];
-    String[] deadlineTimes = new String[3];
+    // TODO: Add data somehow
 
-    int nOfAssignments = assignNames.length;
-    final String[][] assignmentData = new String[nOfAssignments][4];
-    for (int i = 0; i < nOfAssignments; i++) {
-      assignmentData[i][0] = assignNames[i];
-      assignmentData[i][1] = courseNames[i];
-      deadlineDates[i] = Utils.unixToDate(unixDeadlines[i]);
-      deadlineTimes[i] = Utils.unixToTime(unixDeadlines[i]);
-      assignmentData[i][2] = Utils.unixToDate(unixDeadlines[i]);
-      assignmentData[i][3] = Utils.unixToTime(unixDeadlines[i]);
-    }
+    // RequestQueue queue = Volley.newRequestQueue(this);
 
+    // Get Data as String
+    String jsonDataRaw =
+        "{\"status\":1,\"content\":[{\"id\":1,\"course\":\"CO120.1 - DPLL\",\"start\":1547458577,\"end\":1550136977},{\"id\":2,\"course\":\"CO140 - First Order Natural Deduction\",\"start\":1546853777,\"end\":1547544977}]}";
+    JSONObject jsonObj;
+    JSONArray assignments;
+    try {
+      jsonObj = new JSONObject(jsonDataRaw);
+      assignments = jsonObj.getJSONArray("content");
 
-    //TODO: Insert Assignments ListView, retrieve Data of assignments order them by date and display
-    //TODO: ListView is clickable to show assignment information and files in a new activity.
+      int nOfAssignments = assignments.length();
+      String[] assignNames = new String[nOfAssignments];
+      String[] courseNames = new String[nOfAssignments];
+      long[] unixDeadlines = new long[nOfAssignments];
+      String[] deadlineDates = new String[3];
+      String[] deadlineTimes = new String[3];
+      final String[][] assignmentData = new String[nOfAssignments][4];
 
-    ListView assignmentsListView = view.findViewById(R.id.assignmentsListView);
-    AssignmentListAdapter assignListAdapter = new AssignmentListAdapter(getContext(), assignNames, courseNames, deadlineDates, deadlineTimes);
-    assignmentsListView.setAdapter(assignListAdapter);
+      for (int i = 0; i < assignments.length(); i++) {
+        String[] names = assignments.getJSONObject(i).getString("course").split(" - ");
+        courseNames[i] = names[0];
+        assignNames[i] = names[1];
+        unixDeadlines[i] = assignments.getJSONObject(i).getLong("start");
+        deadlineDates[i] = Utils.unixToDate(unixDeadlines[i]);
+        deadlineTimes[i] = Utils.unixToTime(unixDeadlines[i]);
 
-    assignmentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent assignmentDetailIntent = new Intent(view.getContext(), AssignmentDetailActivity.class);
-        assignmentDetailIntent.putExtra("Name", assignmentData[position][0]);
-        assignmentDetailIntent.putExtra("Course", assignmentData[position][1]);
-        assignmentDetailIntent.putExtra("DateDue", assignmentData[position][2]);
-        assignmentDetailIntent.putExtra("TimeDue", assignmentData[position][3]);
+        assignmentData[i][0] = assignNames[i];
+        assignmentData[i][1] = courseNames[i];
+        assignmentData[i][2] = Utils.unixToDate(unixDeadlines[i]);
+        assignmentData[i][3] = Utils.unixToTime(unixDeadlines[i]);
       }
-    });
 
+      // TODO: Insert Assignments ListView, retrieve Data of assignments order them by date and
+      // display
+      // TODO: ListView is clickable to show assignment information and files in a new activity.
 
+      ListView assignmentsListView = view.findViewById(R.id.assignmentsListView);
+      AssignmentListAdapter assignListAdapter =
+          new AssignmentListAdapter(
+              getContext(), assignNames, courseNames, deadlineDates, deadlineTimes);
+      assignmentsListView.setAdapter(assignListAdapter);
 
+      assignmentsListView.setOnItemClickListener(
+          new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              Intent assignmentDetailIntent =
+                  new Intent(view.getContext(), AssignmentDetailActivity.class);
+              assignmentDetailIntent.putExtra("Name", assignmentData[position][0]);
+              assignmentDetailIntent.putExtra("Course", assignmentData[position][1]);
+              assignmentDetailIntent.putExtra("DateDue", assignmentData[position][2]);
+              assignmentDetailIntent.putExtra("TimeDue", assignmentData[position][3]);
+            }
+          });
 
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
 
     return view;
   }
