@@ -87,7 +87,7 @@
     global $db;
     $thread = $db->real_escape_string($assignment);
     $data = array();
-    $check = $db->query("SELECT * FROM assigments WHERE aid=$thread");
+    $check = $db->query("SELECT * FROM assignments WHERE aid=$thread");
     if (mysqli_num_rows($check) > 0) {
       $row = $check->fetch_assoc();
       $data['id'] = $thread;
@@ -126,8 +126,6 @@
         $msg['user'] = $user_cache[$id]; // we could use the user profile here too?
         array_push($data['messages'], $msg);
       }
-    } else {
-        $data['id'] = "nmoee";
     }
     return $data;
   }
