@@ -3,33 +3,47 @@ package com.ichack.educate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "ICHACK";
   private SignInButton googleSignInButton;
   private GoogleSignInClient googleSignInClient;
 
+  private RequestQueue requestQueue;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+
+    Log.d(TAG, "ughhhhhhh1234");
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
     googleSignInButton = findViewById(R.id.sign_in_button);
+    
     GoogleSignInOptions gso =
         new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -61,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             onLoggedIn(account);
           } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-          } catch (MalformedURLException e) {
+          } catch (Exception e) {
             e.printStackTrace();
           }
 
@@ -70,49 +84,60 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void onLoggedIn(GoogleSignInAccount googleSignInAccount) throws MalformedURLException {
+  private void onLoggedIn(GoogleSignInAccount googleSignInAccount) throws JSONException{
 
+    Log.d(TAG, "ughhhhhhh123");
 
-    HttpURLConnection request = new HttpURLConnection(new URL("http://yeetr.me/auth.php")) {
-      @Override
-      public void disconnect() {
-
-      }
-
-      @Override
-      public boolean usingProxy() {
-        return false;
-      }
-
-      @Override
-      public void connect() throws IOException {
-
-      }
-    };
-
-
-
-    Intent intent = new Intent(this, HomeActivity.class);
-
+    final Intent intent = new Intent(this, HomeActivity.class);
     intent.putExtra(String.valueOf(HomeActivity.GOOGLE_ACCOUNT), googleSignInAccount);
     startActivity(intent);
     finish();
+
   }
 
   @Override
   public void onStart() {
     super.onStart();
 
+    GoogleSignIn.silentSignIn()
+            .addOnCompleteListener(this, new OnCompleteListener<GoogleSignInAccount>() {
+              @Override
+              public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                handleSignInResult(task);
+              }
+
+              private void handleSignInResult(Task<GoogleSignInAccount> task) {
+              }
+            });
+    
     GoogleSignInAccount lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
     if (lastSignedInAccount != null) {
       try {
         onLoggedIn(lastSignedInAccount);
-      } catch (MalformedURLException e) {
+      } catch (JSONException e) {
         e.printStackTrace();
       }
     } else {
       Log.d(TAG, "Not logged in");
     }
   }
+
+
+
+  public RequestQueue getRequestQueue() {
+    if (requestQueue == null)
+      requestQueue = Volley.newRequestQueue(getApplicationContext());
+    return requestQueue;
+  }
+
+  public void addToRequestQueue(Request<JSONObject> request, String tag) {
+    request.setTag(tag);
+    getRequestQueue().add(request);
+  }
+
+  public void cancelAllRequests(String tag) {
+    getRequestQueue().cancelAll(tag);
+  }
+
 }
