@@ -108,7 +108,7 @@
           $users = $db->query("SELECT * FROM users WHERE uid='$id'") or die(";119");
           $user = $users->fetch_assoc();
           $new_user = array();
-          $new_user['username'] = $id;
+          $new_user['username'] = $user['username'];
           $new_user['picture'] = $user['picture'];
           $user_cache[$id] = $new_user;
         }
