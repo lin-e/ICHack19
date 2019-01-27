@@ -85,12 +85,12 @@
 
   function loadAssignment($assignment, $start, $end) { // the start and end boundaries are timestamps
     global $db;
-    $thread = $db->real_escape_string($assignment);
+    $thread = strval($db->real_escape_string($assignment));
     $data = array();
     $check = $db->query("SELECT * FROM assignments WHERE aid=$thread") or die("l90");
     if (mysqli_num_rows($check) > 0) {
       $row = $check->fetch_assoc();
-      $data['id'] = $thread;
+      $data['id'] = intval($thread);
       $data['start'] = $start;
       $data['end'] = $end;
       $data['set'] = intval($row['start']);
