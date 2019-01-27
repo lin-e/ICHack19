@@ -10,6 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,13 +31,32 @@ public class AssignmentsFragment extends Fragment {
 
     View view = inflater.inflate(R.layout.fragment_assignments, container, false);
 
-    // TODO: Add data somehow
+    /*
+    RequestQueue queue = Volley.newRequestQueue(getContext());
+    queue.start();
+    String url = "http://yeetr.me/assignments.php?token=YczmZ72iy74wPtKVQbUrXNMswrtInyTl";
+    final String[] jsonDataRaw = new String[1];
 
-    // RequestQueue queue = Volley.newRequestQueue(this);
+    StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+      @Override
+      public void onResponse(String response) {
+        jsonDataRaw[0] = response;
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        jsonDataRaw[0] = "";
+      }
+    });
 
-    // Get Data as String
+    queue.add(stringRequest);
+
+    */
+
     String jsonDataRaw =
         "{\"status\":1,\"content\":[{\"id\":1,\"course\":\"CO120.1 - DPLL\",\"start\":1547458577,\"end\":1550136977},{\"id\":2,\"course\":\"CO140 - First Order Natural Deduction\",\"start\":1546853777,\"end\":1547544977}]}";
+
+
     JSONObject jsonObj;
     JSONArray assignments;
     try {
