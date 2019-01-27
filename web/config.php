@@ -126,6 +126,8 @@
         $msg['user'] = $user_cache[$id]; // we could use the user profile here too?
         array_push($data['messages'], $msg);
       }
+    } else {
+        return 4;
     }
     return $data;
   }
