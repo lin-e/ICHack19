@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
   public void onStart() {
     super.onStart();
 
+    Intent changeActivity;
+    changeActivity = new Intent(MainActivity.this, HomeActivity.class);
+    /*
+    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
     GoogleSignInAccount lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
     if (lastSignedInAccount != null) {
@@ -83,5 +88,8 @@ public class MainActivity extends AppCompatActivity {
     } else {
       Log.d(TAG, "Not logged in");
     }
+
+    */
+    startActivity(changeActivity);
   }
 }
