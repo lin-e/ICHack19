@@ -98,17 +98,9 @@
       $data['files'] = array();
       $startbound = strval($start);
       $endbound = strval($end);
-      $files = $db->query("SELECT * FROM resources WHERE aid=$thread") or die("l103");
-      while ($file = $files->fetch_assoc()) {
-        $fil = array();
-        $fil['url'] = $file['url'];
-        $fil['time'] = intval($file['time']);
-        array_push($data['files'], $fil);
-      }
       $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
-        die("DONEENE");
         $msg = array();
         $msg['id'] = $message['mid'];
         $msg['body'] = $message['content'];
@@ -124,6 +116,13 @@
         }
         $msg['user'] = $user_cache[$id]; // we could use the user profile here too?
         array_push($data['messages'], $msg);
+      }
+      $files = $db->query("SELECT * FROM resources WHERE aid=$thread") or die("l103");
+      while ($file = $files->fetch_assoc()) {
+        $fil = array();
+        $fil['url'] = $file['url'];
+        $fil['time'] = intval($file['time']);
+        array_push($data['files'], $fil);
       }
     }
     return $data;
