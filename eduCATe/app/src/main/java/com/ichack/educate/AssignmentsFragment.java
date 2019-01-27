@@ -105,6 +105,7 @@ public class AssignmentsFragment extends Fragment {
               assignmentDetailIntent.putExtra("Course", assignmentData[position][1]);
               assignmentDetailIntent.putExtra("DateDue", assignmentData[position][2]);
               assignmentDetailIntent.putExtra("TimeDue", assignmentData[position][3]);
+              startActivity(assignmentDetailIntent);
             }
           });
 
