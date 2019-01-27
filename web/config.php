@@ -89,6 +89,7 @@
     $data = array();
     $check = $db->query("SELECT * FROM assignments WHERE aid=$thread") or die("l90");
     if (mysqli_num_rows($check) > 0) {
+      echo "devu";
       $row = $check->fetch_assoc();
       $data['id'] = intval($thread);
       $data['start'] = $start;
