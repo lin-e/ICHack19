@@ -96,8 +96,6 @@
       $data['course'] = $row['course'];
       $data['messages'] = array();
       $data['files'] = array();
-      $startbound = strval($start);
-      $endbound = strval($end);
       $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
