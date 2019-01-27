@@ -104,15 +104,12 @@
         $msg['body'] = $message['content'];
         $msg['time'] = intval($message['time']);
         $id = $message['uid'];
-        if (!array_key_exists($id, $user_cache)) {
-          $users = $db->query("SELECT * FROM users WHERE uid='$id'") or die(";119");
-          $user = $users->fetch_assoc();
-          $new_user = array();
-          $new_user['username'] = $user['username'];
-          $new_user['picture'] = $user['picture'];
-          $user_cache[$id] = $new_user;
-        }
-        $msg['user'] = $user_cache[$id]; // we could use the user profile here too?
+        $users = $db->query("SELECT * FROM users WHERE uid='$id'") or die(";119");
+        $user = $users->fetch_assoc();
+        $new_user = array();
+        $new_user['username'] = $user['username'];
+        $new_user['picture'] = $user['picture'];
+        $msg['user'] = $new_user; // we could use the user profile here too?
         array_push($data['messages'], $msg);
       }
       $files = $db->query("SELECT * FROM resources WHERE aid=$thread") or die("l103");
