@@ -100,14 +100,14 @@
       $data['files'] = array();
       $startbound = strval($start);
       $endbound = strval($end);
-      $files = $db->query("SELECT * FROM resources WHERE aid='$thread'") or die("l103");
+      $files = $db->query("SELECT * FROM resources WHERE aid=$thread") or die("l103");
       while ($file = $files->fetch_assoc()) {
         $fil = array();
         $fil['url'] = $file['url'];
         $fil['time'] = intval($file['time']);
         array_push($data['files'], $fil);
       }
-      $messages = $db->query("SELECT * FROM messages WHERE assignment='$thread' AND time >= $startbound AND time <= $endbound ORDER BY time") or die("l110");
+      $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread AND time >= $startbound AND time <= $endbound ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
         $msg = array();
