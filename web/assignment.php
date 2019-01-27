@@ -1,6 +1,5 @@
 <?php
   include("config.php");
   $a = $_GET['a'];
-  echo "p".$a."d";
-  var_dump(loadAssignments($a, 0, time()));
+  die(json_encode(loadAssignments($a, 0, time())));
 ?>
