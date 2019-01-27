@@ -30,10 +30,15 @@ dependencies {
 
 dependencies {
     compile 'com.google.android.gms:play-services-auth:15.0.1'
+    compile 'com.android.volley:volley:1.1.1'
 }
 
 dependencies {
     implementation 'com.android.support:support-v4:28.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+
+dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/assignNameTV"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:text="Assignment Name"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="18sp"/>
+
+    <TextView
+            android:id="@+id/assignDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/assignNameTV"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/assignTimeTV"
+            android:text="Date"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp" android:layout_toEndOf="@+id/assignNameTV" android:layout_marginStart="30dp"/>
+
+    <TextView
+            android:id="@+id/assignTimeTV"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/assignDateTV"
+            android:layout_alignBottom="@+id/assignDateTV"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:text="Time"
+            android:textColor="?android:attr/textColorTertiary" android:textSize="10sp"/>
+
+    <TextView
+            android:id="@+id/courseNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/assignNameTV"
+            android:layout_below="@+id/assignNameTV"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="12dp"
+            android:text="Course"
+            android:textColor="?android:attr/textColorTertiary" android:textSize="18sp"/>
+
+</RelativeLayout>
