@@ -20,4 +20,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!--Strings related to account information -->
+    <string name="display_name">User</string>
+    <string name="account_email">user@email.com</string>
 </resources>

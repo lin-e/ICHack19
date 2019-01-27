@@ -16,6 +16,11 @@ public class DashboardFragment extends Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+    View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+    //TODO: Have a Linear Layout (vertical) to display latest assignment, and then recent channels.
+
+    return view;
   }
 }

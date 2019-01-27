@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.NavigableMap;
 
@@ -22,9 +24,11 @@ public class HomeActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
+    // Set styling for the toolbar
     Toolbar toolbar = findViewById(R.id.homeToolbar);
     setSupportActionBar(toolbar);
 
+    // Add functionality of the navigation menu 'drawer'
     drawer = findViewById(R.id.drawer_layout);
     NavigationView navigationView = findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
@@ -38,6 +42,17 @@ public class HomeActivity extends AppCompatActivity
             R.string.navigation_drawer_close);
     drawer.addDrawerListener(toggle);
     toggle.syncState();
+
+    // Set the user information for the navigation menu
+    TextView displayNameTV = findViewById(R.id.displayNameTV);
+    TextView emailTV = findViewById(R.id.emailTV);
+    ImageView profilePicImgV = findViewById(R.id.profilePicImgV);
+
+    //TODO: Insert retrieval of user's data and save as a string in res files.
+    //displayNameTV.setText(getResources().getString(R.string.display_name));
+    //emailTV.setText(getResources().getString(R.string.account_email));
+    //profilePicImgV.setImageBitmap(Image path);
+
 
     // If it is the first time the activity is loaded, it wil default to the dashboard,
     // otherwise it will not keep refreshing back to the dashboard on every refresh.
@@ -68,6 +83,12 @@ public class HomeActivity extends AppCompatActivity
             .beginTransaction()
             .replace(R.id.fragment_container, new AssignmentsFragment())
             .commit();
+        break;
+      case R.id.nav_invites:
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new InvitesFragment())
+                .commit();
         break;
       case R.id.nav_settings:
         getSupportFragmentManager()

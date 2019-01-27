@@ -16,6 +16,12 @@ public class SettingsFragment extends Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_settings, container, false);
+
+      View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+      //TODO: Add Log out functionality, other settings???
+      //TODO: Settings perhaps include archive delay between assignment deadline, and chat being moved to course archive
+
+      return view;
   }
 }

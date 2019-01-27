@@ -16,6 +16,12 @@ public class AssignmentsFragment extends Fragment {
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_assignments, container, false);
+
+    View view = inflater.inflate(R.layout.fragment_assignments, container, false);
+
+    //TODO: Insert Assignments ListView, retrieve Data of assignments order them by date and display
+    //TODO: ListView is clickable to show assignment information and files in a new activity.
+
+    return view;
   }
 }
