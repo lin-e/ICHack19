@@ -83,7 +83,7 @@
     return true;
   }
 
-  function loadAssignment($assignment, $start, $end) { // the start and end boundaries are timestamps
+  function loadAssignment($assignment) { // the start and end boundaries are timestamps
     global $db;
     $thread = strval($db->real_escape_string($assignment));
     $data = array();
@@ -108,6 +108,7 @@
       $messages = $db->query("SELECT * FROM messages WHERE assignment=$thread ORDER BY time") or die("l110");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
+        die("DONEENE");
         $msg = array();
         $msg['id'] = $message['mid'];
         $msg['body'] = $message['content'];
