@@ -83,22 +83,23 @@
     return true;
   }
 
-  function loadThread($tid, $start, $end) { // the start and end boundaries are timestamps
+  function loadAssignment($assignment, $start, $end) { // the start and end boundaries are timestamps
     global $db;
-    $thread = $db->real_escape_string($tid);
+    $thread = $db->real_escape_string($assignment);
     $data = array();
-    $check = $db->query("SELECT * FROM threads WHERE thread='$thread'");
+    $check = $db->query("SELECT * FROM assigments WHERE aid='$thread'");
     if (mysqli_num_rows($check) > 0) {
       $row = $check->fetch_assoc();
       $data['id'] = $thread;
       $data['start'] = $start;
       $data['end'] = $end;
-      $data['assignment'] = intval($row['aid']);
-      $data['time'] = intval($row['time']);
+      $data['set'] = intval($row['start']);
+      $data['due'] = intval($row['end']);
+      $data['course'] = $row['course'];
       $data['messages'] = array();
       $startbound = strval($start);
       $endbound = strval($end);
-      $messages = $db->query("SELECT * FROM messages WHERE thread='$thread' AND time >= $startbound AND time <= $endbound");
+      $messages = $db->query("SELECT * FROM messages WHERE assigments='$thread' AND time >= $startbound AND time <= $endbound");
       $user_cache = array();
       while ($message = $messages->fetch_assoc()) {
         $msg = array();
@@ -127,7 +128,7 @@
     $assignments = array();
     while ($sub = $subs->fetch_assoc()) {
       $aid = intval($sub['aid']);
-      $assignment = $db->query("SELECT * FROM assignments WHERE aid='$aid'")
+      $assignment = $db->query("SELECT * FROM assignments WHERE aid='$aid'");
       $data = array();
       $data['id'] = $aid;
       $data['course'] = $assignment['course'];
