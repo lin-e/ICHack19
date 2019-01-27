@@ -127,7 +127,7 @@
         array_push($data['messages'], $msg);
       }
     } else {
-        return 4;
+        $data['id'] = "nmoee";
     }
     return $data;
   }
