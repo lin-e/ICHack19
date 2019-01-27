@@ -128,12 +128,12 @@
     $assignments = array();
     while ($sub = $subs->fetch_assoc()) {
       $aid = intval($sub['aid']);
-      $assignment = $db->query("SELECT * FROM assignments WHERE aid='$aid'");
+      $assignment = $db->query("SELECT * FROM assignments WHERE aid='$aid'")->fetch_assoc();
       $data = array();
       $data['id'] = $aid;
       $data['course'] = $assignment['course'];
-      $data['start'] = intval($assignemt['start']);
-      $data['end'] = intval($assignemt['end']);
+      $data['start'] = intval($assignment['start']);
+      $data['end'] = intval($assignment['end']);
       array_push($assignments, $data);
     }
     return $assignments;
